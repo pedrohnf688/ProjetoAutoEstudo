@@ -1,5 +1,6 @@
 package com.pedrohnf688.api.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +18,13 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "grupo")
 @Table
-public class Grupo {
+public class Grupo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +48,7 @@ public class Grupo {
 	@JoinTable(name = "grupo_estudante", joinColumns = {
 			@JoinColumn(name = "grupo_id", referencedColumnName = "id_grupo") }, inverseJoinColumns = {
 					@JoinColumn(name = "estudante_id") })
+	@JsonIgnore
 	private List<Estudante> listaEstudantes = new ArrayList<Estudante>();
 
 	public Grupo() {

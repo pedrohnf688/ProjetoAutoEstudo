@@ -1,5 +1,6 @@
 package com.pedrohnf688.api.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +15,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pedrohnf688.api.modelo.enums.EnumSexo;
 import com.pedrohnf688.api.modelo.enums.EnumTipoEscolaridade;
 
 @Entity(name = "estudante")
 @Table
-public class Estudante {
+public class Estudante implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

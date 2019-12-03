@@ -1,5 +1,6 @@
 package com.pedrohnf688.api.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +22,13 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "disciplina")
 @Table
-public class Disciplina {
+public class Disciplina implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +55,7 @@ public class Disciplina {
 	@JoinTable(name = "disciplina_estudante", joinColumns = {
 			@JoinColumn(name = "disciplina_id", referencedColumnName = "id_disciplina") }, inverseJoinColumns = {
 					@JoinColumn(name = "estudante_id") })
+	@JsonIgnore
 	private List<Estudante> listaEstudantes = new ArrayList<Estudante>();
 
 	@OneToMany(mappedBy = "disciplina", fetch = FetchType.EAGER, orphanRemoval = true)

@@ -1,5 +1,7 @@
 package com.pedrohnf688.api.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,7 +18,9 @@ import com.pedrohnf688.api.modelo.enums.EnumPrioridade;
 
 @Entity(name = "tarefa")
 @Table
-public class Tarefa {
+public class Tarefa implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

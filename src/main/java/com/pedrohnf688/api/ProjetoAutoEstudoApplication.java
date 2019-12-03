@@ -12,6 +12,7 @@ import com.pedrohnf688.api.modelo.Estudante;
 import com.pedrohnf688.api.modelo.enums.EnumSexo;
 import com.pedrohnf688.api.modelo.enums.EnumTipoEscolaridade;
 import com.pedrohnf688.api.servico.CredencialServico;
+import com.pedrohnf688.api.servico.DisciplinaServico;
 import com.pedrohnf688.api.servico.EstudanteServico;
 
 @SpringBootApplication
@@ -20,8 +21,8 @@ public class ProjetoAutoEstudoApplication {
 	@Autowired
 	private EstudanteServico es;
 
-//	@Autowired
-//	private DisciplinaServico ds;
+	@Autowired
+	private DisciplinaServico ds;
 
 	@Autowired
 	private CredencialServico cs;
@@ -36,11 +37,13 @@ public class ProjetoAutoEstudoApplication {
 
 			// 1
 			Credencial c = new Credencial();
+			c.setId(1);
 			c.setEmail("p@mal.com");
 			c.setSenha("fefew");
 			c.setUsername("pedrosss");
 
 			Estudante e = new Estudante();
+			e.setId(1);
 			e.setInstituicao("fsdfsd");
 			e.setDataNascimento("01/02/1323");
 			e.setDescricao("ffefrere");
@@ -52,11 +55,13 @@ public class ProjetoAutoEstudoApplication {
 
 			// 2
 			Credencial c1 = new Credencial();
+			c1.setId(2);
 			c1.setEmail("p@mswdal.com");
 			c1.setSenha("fefewwdw");
 			c1.setUsername("rosss");
 
 			Estudante e1 = new Estudante();
+			e.setId(2);
 			e1.setInstituicao("fsdfsd");
 			e1.setDataNascimento("21/02/1323");
 			e1.setDescricao("ffefrere");
@@ -67,27 +72,27 @@ public class ProjetoAutoEstudoApplication {
 			this.cs.inserir(c1);
 
 //
-			Disciplina d = new Disciplina();
-
-			d.setAssunto("dfdf");
-			d.setDataDisciplina("34/24/333");
-			d.setQtdEstudantes(1);
-			d.setDisciplina("t34t3");
-			d.getListaEstudantes().add(e);
-			e.getListaDisciplinas().add(d);
+//			Disciplina d = new Disciplina();
+//
+//			d.setAssunto("dfdf");
+//			d.setDataDisciplina("34/24/333");
+//			d.setQtdEstudantes(1);
+//			d.setDisciplina("t34t3");
+//			d.getListaEstudantes().add(e);
+//			e.getListaDisciplinas().add(d);
+//			//this.ds.inserir(d);
 
 			Disciplina d1 = new Disciplina();
-
+			d1.setId(1);
 			d1.setAssunto("d111");
 			d1.setDataDisciplina("11/24/333");
 			d1.setQtdEstudantes(1);
 			d1.setDisciplina("fwefwe");
 			c.getEstudante().getListaDisciplinas().add(d1);
 			d1.getListaEstudantes().add(e);
-			e.getListaDisciplinas().add(d1);
+			// e.getListaDisciplinas().add(d1);
 
-			// this.ds.inserir(d1);
-			this.es.inserir(e);
+			this.ds.inserir(d1);
 
 		};
 	}

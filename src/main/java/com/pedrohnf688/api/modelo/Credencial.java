@@ -1,5 +1,7 @@
 package com.pedrohnf688.api.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +15,9 @@ import org.hibernate.annotations.Cascade;
 
 @Entity(name = "credencial")
 @Table
-public class Credencial {
+public class Credencial implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
