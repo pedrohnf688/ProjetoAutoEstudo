@@ -41,4 +41,10 @@ public class DisciplinaServico {
 		this.dr.deleteById(id);
 	}
 
+	public List<Disciplina> listarPorEstudante(Integer id) {
+		log.info("Listando todos as disciplinas do Estudante: {}",id);
+		return this.dr.findByListaDisciplinas(id);
+	}
+	
+	
 }

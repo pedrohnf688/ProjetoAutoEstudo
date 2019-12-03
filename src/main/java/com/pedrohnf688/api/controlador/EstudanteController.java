@@ -24,9 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pedrohnf688.api.config.Response;
 import com.pedrohnf688.api.modelo.Credencial;
+import com.pedrohnf688.api.modelo.Disciplina;
 import com.pedrohnf688.api.modelo.Estudante;
+import com.pedrohnf688.api.modelo.Grupo;
 import com.pedrohnf688.api.modelo.dto.EstudanteDto;
 import com.pedrohnf688.api.servico.CredencialServico;
+import com.pedrohnf688.api.servico.DisciplinaServico;
 import com.pedrohnf688.api.servico.EstudanteServico;
 
 @RestController
@@ -41,6 +44,9 @@ public class EstudanteController {
 
 	@Autowired
 	private CredencialServico cs;
+
+	@Autowired
+	private DisciplinaServico ds;
 
 	@GetMapping
 	public ResponseEntity<Response<List<Estudante>>> listarTodosEstudantes() {
@@ -191,9 +197,33 @@ public class EstudanteController {
 		return ResponseEntity.ok(new Response<String>());
 	}
 
+	@GetMapping(value = "disciplinas/{id}")
+	public ResponseEntity<Response<List<Disciplina>>> disciplinasDoEstudante(@PathVariable("id") Integer id) {
+		Response<List<Disciplina>> response = new Response<List<Disciplina>>();
+
+		List<Disciplina> disciplinas = this.ds.listarPorEstudante(id);
+
+		if (disciplinas.isEmpty()) {
+			response.getErros().add("A lista de disciplinas do estudante está vazia.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		response.setData(disciplinas);
+		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping(value = "grupos/{id}")
+	public ResponseEntity<Response<List<Grupo>>> gruposDoEstudante() {
+		Response<List<Grupo>> response = new Response<List<Grupo>>();
+
+		return ResponseEntity.ok(response);
+	}
+
 	// findAll -- Feito
 	// findbyId -- Feito
 	// save --Feito
 	// update -- Feito
 	// deletebyId -- Feito
+	// listar disciplinas
+	// listar grupos
 }
