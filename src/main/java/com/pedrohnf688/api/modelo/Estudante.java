@@ -54,11 +54,9 @@ public class Estudante {
 	private EnumTipoEscolaridade escolaridade;
 
 	@ManyToMany(mappedBy = "listaEstudantes")
-	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
 	
 	@ManyToMany(mappedBy = "listaEstudantes")
-	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Grupo> listaGrupos = new ArrayList<Grupo>();
 
 	public Estudante() {
