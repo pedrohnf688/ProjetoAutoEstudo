@@ -1,8 +1,5 @@
 package com.pedrohnf688.api;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,7 +12,6 @@ import com.pedrohnf688.api.modelo.Estudante;
 import com.pedrohnf688.api.modelo.enums.EnumSexo;
 import com.pedrohnf688.api.modelo.enums.EnumTipoEscolaridade;
 import com.pedrohnf688.api.servico.CredencialServico;
-import com.pedrohnf688.api.servico.DisciplinaServico;
 import com.pedrohnf688.api.servico.EstudanteServico;
 
 @SpringBootApplication
@@ -24,8 +20,8 @@ public class ProjetoAutoEstudoApplication {
 	@Autowired
 	private EstudanteServico es;
 
-	@Autowired
-	private DisciplinaServico ds;
+//	@Autowired
+//	private DisciplinaServico ds;
 
 	@Autowired
 	private CredencialServico cs;
@@ -54,7 +50,6 @@ public class ProjetoAutoEstudoApplication {
 			c.setEstudante(e);
 			this.cs.inserir(c);
 
-
 			// 2
 			Credencial c1 = new Credencial();
 			c1.setEmail("p@mswdal.com");
@@ -81,8 +76,6 @@ public class ProjetoAutoEstudoApplication {
 			d.getListaEstudantes().add(e);
 			e.getListaDisciplinas().add(d);
 
-
-
 			Disciplina d1 = new Disciplina();
 
 			d1.setAssunto("d111");
@@ -92,12 +85,10 @@ public class ProjetoAutoEstudoApplication {
 			c.getEstudante().getListaDisciplinas().add(d1);
 			d1.getListaEstudantes().add(e);
 			e.getListaDisciplinas().add(d1);
-			
-			
-			//this.ds.inserir(d1);
+
+			// this.ds.inserir(d1);
 			this.es.inserir(e);
-			
-			
+
 		};
 	}
 }

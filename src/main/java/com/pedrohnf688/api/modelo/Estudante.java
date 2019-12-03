@@ -14,9 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import com.pedrohnf688.api.modelo.enums.EnumSexo;
 import com.pedrohnf688.api.modelo.enums.EnumTipoEscolaridade;
 
@@ -55,7 +52,7 @@ public class Estudante {
 
 	@ManyToMany(mappedBy = "listaEstudantes")
 	private List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
-	
+
 	@ManyToMany(mappedBy = "listaEstudantes")
 	private List<Grupo> listaGrupos = new ArrayList<Grupo>();
 

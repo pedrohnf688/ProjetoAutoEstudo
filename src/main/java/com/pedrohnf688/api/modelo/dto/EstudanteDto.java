@@ -1,6 +1,5 @@
 package com.pedrohnf688.api.modelo.dto;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 
 import com.pedrohnf688.api.modelo.enums.EnumSexo;

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pedrohnf688.api.modelo.Disciplina;
-import com.pedrohnf688.api.modelo.Grupo;
 import com.pedrohnf688.api.repositorio.DisciplinaRepositorio;
 
 @Service
@@ -42,9 +41,8 @@ public class DisciplinaServico {
 	}
 
 	public List<Disciplina> listarPorEstudante(Integer id) {
-		log.info("Listando todos as disciplinas do Estudante: {}",id);
+		log.info("Listando todos as disciplinas do Estudante: {}", id);
 		return this.dr.findByListaDisciplinas(id);
 	}
-	
-	
+
 }
