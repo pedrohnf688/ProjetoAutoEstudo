@@ -1,5 +1,6 @@
 package com.pedrohnf688.api.modelo.dto;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.pedrohnf688.api.modelo.enums.EnumSexo;
@@ -7,10 +8,10 @@ import com.pedrohnf688.api.modelo.enums.EnumTipoEscolaridade;
 
 public class EstudanteDto {
 
-	@NotNull(message = "O campo nome não pode ser vazio.")
+	@NotBlank(message = "O campo nome não pode ser vazio.")
 	private String nome;
 
-	@NotNull(message = "O campo instituicao não pode ser vazio.")
+	@NotBlank(message = "O campo instituicao não pode ser vazio.")
 	private String instituicao;
 
 	private String descricao;
@@ -18,20 +19,24 @@ public class EstudanteDto {
 	@NotNull(message = "O campo sexo não pode ser vazio.")
 	private EnumSexo sexo;
 
-	@NotNull(message = "O campo dataNascimento não pode ser vazio.")
+	@NotBlank(message = "O campo dataNascimento não pode ser vazio.")
 	private String dataNascimento;
 
 	@NotNull(message = "O campo escolaridade não pode ser vazio.")
 	private EnumTipoEscolaridade escolaridade;
 
-	@NotNull(message = "O campo username não pode ser vazio.")
+	@NotBlank(message = "O campo username não pode ser vazio.")
 	private String username;
 
-	@NotNull(message = "O campo email não pode ser vazio.")
+	@NotBlank(message = "O campo email não pode ser vazio.")
 	private String email;
 
-	@NotNull(message = "O campo senha não pode ser vazio.")
+	@NotBlank(message = "O campo senha não pode ser vazio.")
 	private String senha;
+
+	public EstudanteDto() {
+		super();
+	}
 
 	public String getNome() {
 		return nome;

@@ -40,4 +40,9 @@ public class GrupoServico {
 		this.gr.deleteById(id);
 	}
 
+	public List<Grupo> listarPorEstudante(Integer id) {
+		log.info("Listando todos as grupos do Estudante: {}", id);
+		return this.gr.findByListaGrupos(id);
+	}
+
 }

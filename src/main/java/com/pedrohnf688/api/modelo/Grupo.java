@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cascade;
@@ -32,11 +33,11 @@ public class Grupo implements Serializable {
 	private Integer id;
 
 	@Column(name = "titulo", nullable = false)
-	@NotNull(message = "O campo titulo não pode ser vazio.")
+	@NotBlank(message = "O campo titulo não pode ser vazio.")
 	private String titulo;
 
 	@Column(name = "dataGrupo", nullable = false)
-	@NotNull(message = "O campo dataGrupo não pode ser vazio.")
+	@NotBlank(message = "O campo dataGrupo não pode ser vazio.")
 	private String dataGrupo;
 
 	@Column(name = "qtdEstudantes", nullable = false)
@@ -55,9 +56,9 @@ public class Grupo implements Serializable {
 		super();
 	}
 
-	public Grupo(@NotNull(message = "O campo titulo não pode ser vazio.") String titulo,
-			@NotNull(message = "O campo dataGrupo não pode ser vazio.") String dataGrupo,
-			@NotNull(message = "O campo qtdEstudantes não pode ser vazio.") int qtdEstudantes,
+	public Grupo(@NotBlank(message = "O campo titulo não pode ser vazio.") String titulo,
+			@NotBlank(message = "O campo dataGrupo não pode ser vazio.") String dataGrupo,
+			@NotBlank(message = "O campo qtdEstudantes não pode ser vazio.") int qtdEstudantes,
 			List<Estudante> listaEstudantes) {
 		super();
 		this.titulo = titulo;

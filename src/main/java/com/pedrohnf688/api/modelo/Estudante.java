@@ -13,9 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pedrohnf688.api.modelo.enums.EnumSexo;
 import com.pedrohnf688.api.modelo.enums.EnumTipoEscolaridade;
 
@@ -30,11 +30,11 @@ public class Estudante implements Serializable {
 	private Integer id;
 
 	@Column(name = "nome", nullable = false)
-	@NotNull(message = "O campo nome não pode ser vazio.")
+	@NotBlank(message = "O campo nome não pode ser vazio.")
 	private String nome;
 
 	@Column(name = "instituicao", nullable = false)
-	@NotNull(message = "O campo instituicao não pode ser vazio.")
+	@NotBlank(message = "O campo instituicao não pode ser vazio.")
 	private String instituicao;
 
 	@Column(name = "descricao")
@@ -46,7 +46,7 @@ public class Estudante implements Serializable {
 	private EnumSexo sexo;
 
 	@Column(name = "dataNascimento", nullable = false)
-	@NotNull(message = "O campo dataNascimento não pode ser vazio.")
+	@NotBlank(message = "O campo dataNascimento não pode ser vazio.")
 	private String dataNascimento;
 
 	@Column(name = "escolaridade", nullable = false)
@@ -64,11 +64,11 @@ public class Estudante implements Serializable {
 		super();
 	}
 
-	public Estudante(@NotNull(message = "O campo nome não pode ser vazio.") String nome,
-			@NotNull(message = "O campo instituicao não pode ser vazio.") String instituicao, String descricao,
-			@NotNull(message = "O campo sexo não pode ser vazio.") EnumSexo sexo,
-			@NotNull(message = "O campo dataNascimento não pode ser vazio.") String dataNascimento,
-			@NotNull(message = "O campo escolaridade não pode ser vazio.") EnumTipoEscolaridade escolaridade,
+	public Estudante(@NotBlank(message = "O campo nome não pode ser vazio.") String nome,
+			@NotBlank(message = "O campo instituicao não pode ser vazio.") String instituicao, String descricao,
+			@NotBlank(message = "O campo sexo não pode ser vazio.") EnumSexo sexo,
+			@NotBlank(message = "O campo dataNascimento não pode ser vazio.") String dataNascimento,
+			@NotBlank(message = "O campo escolaridade não pode ser vazio.") EnumTipoEscolaridade escolaridade,
 			List<Disciplina> listaDisciplinas, List<Grupo> listaGrupos) {
 		super();
 		this.nome = nome;

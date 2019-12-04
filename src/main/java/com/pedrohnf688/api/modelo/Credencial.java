@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.Cascade;
 
@@ -24,15 +24,15 @@ public class Credencial implements Serializable {
 	private Integer id;
 
 	@Column(name = "username", nullable = false)
-	@NotNull(message = "O campo username não pode ser vazio.")
+	@NotBlank(message = "O campo username não pode ser vazio.")
 	private String username;
 
 	@Column(name = "email", nullable = false)
-	@NotNull(message = "O campo email não pode ser vazio.")
+	@NotBlank(message = "O campo email não pode ser vazio.")
 	private String email;
 
 	@Column(name = "senha", nullable = false)
-	@NotNull(message = "O campo senha não pode ser vazio.")
+	@NotBlank(message = "O campo senha não pode ser vazio.")
 	private String senha;
 
 	@OneToOne
@@ -43,9 +43,9 @@ public class Credencial implements Serializable {
 		super();
 	}
 
-	public Credencial(@NotNull(message = "O campo username não pode ser vazio.") String username,
-			@NotNull(message = "O campo email não pode ser vazio.") String email,
-			@NotNull(message = "O campo senha não pode ser vazio.") String senha, Estudante estudante) {
+	public Credencial(@NotBlank(message = "O campo username não pode ser vazio.") String username,
+			@NotBlank(message = "O campo email não pode ser vazio.") String email,
+			@NotBlank(message = "O campo senha não pode ser vazio.") String senha, Estudante estudante) {
 		super();
 		this.username = username;
 		this.email = email;

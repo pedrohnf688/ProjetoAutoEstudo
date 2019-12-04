@@ -31,6 +31,7 @@ import com.pedrohnf688.api.modelo.dto.EstudanteDto;
 import com.pedrohnf688.api.servico.CredencialServico;
 import com.pedrohnf688.api.servico.DisciplinaServico;
 import com.pedrohnf688.api.servico.EstudanteServico;
+import com.pedrohnf688.api.servico.GrupoServico;
 
 @RestController
 @RequestMapping(value = "/estudante")
@@ -47,6 +48,9 @@ public class EstudanteController {
 
 	@Autowired
 	private DisciplinaServico ds;
+
+	@Autowired
+	private GrupoServico gs;
 
 	@GetMapping
 	public ResponseEntity<Response<List<Estudante>>> listarTodosEstudantes() {
@@ -199,6 +203,7 @@ public class EstudanteController {
 
 	@GetMapping(value = "disciplinas/{id}")
 	public ResponseEntity<Response<List<Disciplina>>> disciplinasDoEstudante(@PathVariable("id") Integer id) {
+
 		Response<List<Disciplina>> response = new Response<List<Disciplina>>();
 
 		List<Disciplina> disciplinas = this.ds.listarPorEstudante(id);
@@ -213,9 +218,153 @@ public class EstudanteController {
 	}
 
 	@GetMapping(value = "grupos/{id}")
-	public ResponseEntity<Response<List<Grupo>>> gruposDoEstudante() {
+	public ResponseEntity<Response<List<Grupo>>> gruposDoEstudante(@PathVariable("id") Integer id) {
+
 		Response<List<Grupo>> response = new Response<List<Grupo>>();
 
+		List<Grupo> grupos = this.gs.listarPorEstudante(id);
+
+		if (grupos.isEmpty()) {
+			response.getErros().add("A lista de grupos do estudante está vazia.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		response.setData(grupos);
+		return ResponseEntity.ok(response);
+	}
+
+	@PostMapping(value = "{idEstudante}/disciplina/{idDisciplina}")
+	public ResponseEntity<Response<Disciplina>> adicionarDisciplina(@PathVariable("idEstudante") Integer idEstudante,
+			@PathVariable("idDisciplina") Integer idDisciplina) {
+
+		Response<Disciplina> response = new Response<Disciplina>();
+
+		Optional<Estudante> e = this.es.listaPorId(idEstudante);
+
+		if (!e.isPresent()) {
+			response.getErros().add("Estudante não existente.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		Optional<Disciplina> d = this.ds.listaPorId(idDisciplina);
+
+		if (!d.isPresent()) {
+			response.getErros().add("Disciplina não existente.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		if (e.get().getListaDisciplinas().contains(d.get())) {
+			response.getErros().add("Estudante já está cadastro nesta disciplina.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		d.get().getListaEstudantes().add(e.get());
+		d.get().setQtdEstudantes(d.get().getQtdEstudantes() + 1);
+		this.ds.inserir(d.get());
+
+		response.setData(d.get());
+		return ResponseEntity.ok(response);
+	}
+
+	@PostMapping(value = "{idEstudante}/grupo/{idGrupo}")
+	public ResponseEntity<Response<Grupo>> adicionarGrupo(@PathVariable("idEstudante") Integer idEstudante,
+			@PathVariable("idGrupo") Integer idGrupo) {
+
+		Response<Grupo> response = new Response<Grupo>();
+
+		Optional<Estudante> e = this.es.listaPorId(idEstudante);
+
+		if (!e.isPresent()) {
+			response.getErros().add("Estudante não existente.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		Optional<Grupo> g = this.gs.listaPorId(idGrupo);
+
+		if (e.get().getListaGrupos().contains(g.get())) {
+			response.getErros().add("Estudante já está cadastro neste grupo.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		g.get().getListaEstudantes().add(e.get());
+		g.get().setQtdEstudantes(g.get().getQtdEstudantes() + 1);
+		this.gs.inserir(g.get());
+
+		response.setData(g.get());
+		return ResponseEntity.ok(response);
+	}
+
+	@PutMapping(value = "{idEstudante}/disciplina/{idDisciplina}")
+	public ResponseEntity<Response<Disciplina>> removerDisciplina(@PathVariable("idEstudante") Integer idEstudante,
+			@PathVariable("idDisciplina") Integer idDisciplina) {
+
+		Response<Disciplina> response = new Response<Disciplina>();
+
+		Optional<Estudante> e = this.es.listaPorId(idEstudante);
+
+		if (!e.isPresent()) {
+			response.getErros().add("Estudante não existente.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		Optional<Disciplina> d = this.ds.listaPorId(idDisciplina);
+
+		if (!d.isPresent()) {
+			response.getErros().add("Disciplina não existente.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		if (!e.get().getListaDisciplinas().contains(d.get())) {
+			response.getErros().add("Essa disciplina não existe nas suas disciplinas.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		if (d.get().getQtdEstudantes() > 1) {
+			d.get().getListaEstudantes().remove(e.get());
+			d.get().setQtdEstudantes(d.get().getQtdEstudantes() - 1);
+			this.ds.inserir(d.get());
+		} else {
+			this.ds.deletarPorId(d.get().getId());
+		}
+
+		response.setData(d.get());
+		return ResponseEntity.ok(response);
+	}
+
+	@PutMapping(value = "{idEstudante}/grupo/{idGrupo}")
+	public ResponseEntity<Response<Grupo>> removerGrupo(@PathVariable("idEstudante") Integer idEstudante,
+			@PathVariable("idGrupo") Integer idGrupo) {
+
+		Response<Grupo> response = new Response<Grupo>();
+
+		Optional<Estudante> e = this.es.listaPorId(idEstudante);
+
+		if (!e.isPresent()) {
+			response.getErros().add("Estudante não existente.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		Optional<Grupo> g = this.gs.listaPorId(idGrupo);
+
+		if (!g.isPresent()) {
+			response.getErros().add("Grupo não existente.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		if (!e.get().getListaGrupos().contains(g.get())) {
+			response.getErros().add("Esse grupo não existe nos seus grupos.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		if (g.get().getQtdEstudantes() > 1) {
+			g.get().getListaEstudantes().remove(e.get());
+			g.get().setQtdEstudantes(g.get().getQtdEstudantes() - 1);
+			this.gs.inserir(g.get());
+		} else {
+			this.gs.deletarPorId(g.get().getId());
+		}
+
+		response.setData(g.get());
 		return ResponseEntity.ok(response);
 	}
 
@@ -225,5 +374,9 @@ public class EstudanteController {
 	// update -- Feito
 	// deletebyId -- Feito
 	// listar disciplinas
-	// listar grupos
+	// listar grupos -- Feito
+	// Add Disciplina -- Feito
+	// Add Grupo -- Feito
+	// remover disciplna -- Feito
+	// remover grupo -- Feito
 }

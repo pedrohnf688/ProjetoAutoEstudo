@@ -39,6 +39,11 @@ public class TarefaServico {
 		log.info("Deletando tarefa por id: {}", id);
 		this.tr.deleteById(id);
 	}
+	
+	public List<Tarefa> listarPorDisciplina(Integer id){
+		log.info("Listando todos as tarefas da Disciplinas: {}", id);
+		return this.tr.findByListaTarefas(id);
+	}
 
 	
 }

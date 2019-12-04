@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Bean;
 import com.pedrohnf688.api.modelo.Credencial;
 import com.pedrohnf688.api.modelo.Disciplina;
 import com.pedrohnf688.api.modelo.Estudante;
+import com.pedrohnf688.api.modelo.Grupo;
 import com.pedrohnf688.api.modelo.enums.EnumSexo;
 import com.pedrohnf688.api.modelo.enums.EnumTipoEscolaridade;
 import com.pedrohnf688.api.servico.CredencialServico;
 import com.pedrohnf688.api.servico.DisciplinaServico;
 import com.pedrohnf688.api.servico.EstudanteServico;
+import com.pedrohnf688.api.servico.GrupoServico;
 
 @SpringBootApplication
 public class ProjetoAutoEstudoApplication {
@@ -26,6 +28,9 @@ public class ProjetoAutoEstudoApplication {
 
 	@Autowired
 	private CredencialServico cs;
+	
+	@Autowired
+	private GrupoServico gs;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoAutoEstudoApplication.class, args);
@@ -35,7 +40,8 @@ public class ProjetoAutoEstudoApplication {
 	public CommandLineRunner commandLineRunner() {
 		return args -> {
 
-			// 1
+
+///Credencial e Estudante
 			Credencial c = new Credencial();
 			c.setId(1);
 			c.setEmail("p@mal.com");
@@ -61,7 +67,7 @@ public class ProjetoAutoEstudoApplication {
 			c1.setUsername("rosss");
 
 			Estudante e1 = new Estudante();
-			e.setId(2);
+			e1.setId(2);
 			e1.setInstituicao("fsdfsd");
 			e1.setDataNascimento("21/02/1323");
 			e1.setDescricao("ffefrere");
@@ -71,29 +77,36 @@ public class ProjetoAutoEstudoApplication {
 			c1.setEstudante(e1);
 			this.cs.inserir(c1);
 
-//
-//			Disciplina d = new Disciplina();
-//
-//			d.setAssunto("dfdf");
-//			d.setDataDisciplina("34/24/333");
-//			d.setQtdEstudantes(1);
-//			d.setDisciplina("t34t3");
-//			d.getListaEstudantes().add(e);
-//			e.getListaDisciplinas().add(d);
-//			//this.ds.inserir(d);
+///Disciplina
+			Disciplina d = new Disciplina();
+			d.setId(1);
+			d.setAssunto("dfdf");
+			d.setDataDisciplina("34/24/333");
+			d.setQtdEstudantes(1);
+			d.setDisciplina("t34t3");
+			d.getListaEstudantes().add(e1);
+			this.ds.inserir(d);
 
 			Disciplina d1 = new Disciplina();
-			d1.setId(1);
+			d1.setId(2);
 			d1.setAssunto("d111");
 			d1.setDataDisciplina("11/24/333");
 			d1.setQtdEstudantes(1);
 			d1.setDisciplina("fwefwe");
-			c.getEstudante().getListaDisciplinas().add(d1);
+			//c.getEstudante().getListaDisciplinas().add(d1);
 			d1.getListaEstudantes().add(e);
-			// e.getListaDisciplinas().add(d1);
-
 			this.ds.inserir(d1);
 
+/// Grupo			
+			Grupo g = new Grupo();
+			g.setId(1);
+			g.setDataGrupo("01/02/1222");
+			g.getListaEstudantes().add(e);
+			//e.getListaGrupos().add(g);
+			g.setQtdEstudantes(1);
+			g.setTitulo("dwdwwdddd");
+			this.gs.inserir(g);
+			
 		};
 	}
 }

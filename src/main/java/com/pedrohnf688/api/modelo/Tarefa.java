@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.pedrohnf688.api.modelo.enums.EnumPrioridade;
@@ -27,23 +28,23 @@ public class Tarefa implements Serializable {
 	private Integer id;
 
 	@Column(name = "tituloTarefa", nullable = false)
-	@NotNull(message = "O campo tituloTarefa não pode ser vazio.")
+	@NotBlank(message = "O campo tituloTarefa não pode ser vazio.")
 	private String tituloTarefa;
 
 	@Column(name = "descricaoTarefa", nullable = false)
-	@NotNull(message = "O campo descricaoTarefa não pode ser vazio.")
+	@NotBlank(message = "O campo descricaoTarefa não pode ser vazio.")
 	private String descricaoTarefa;
 
 	@Column(name = "inicioTarefa", nullable = false)
-	@NotNull(message = "O campo inicioTarefa não pode ser vazio.")
+	@NotBlank(message = "O campo inicioTarefa não pode ser vazio.")
 	private String inicioTarefa;
 
 	@Column(name = "terminoTarefa", nullable = false)
-	@NotNull(message = "O campo terminoTarefa não pode ser vazio.")
+	@NotBlank(message = "O campo terminoTarefa não pode ser vazio.")
 	private String terminoTarefa;
 
 	@Column(name = "finalizada", nullable = false)
-	@NotNull(message = "O campo finalizada não pode ser vazio.")
+	@NotBlank(message = "O campo finalizada não pode ser vazio.")
 	private boolean finalizada;
 
 	@Column(name = "prioridade", nullable = false)
@@ -59,12 +60,12 @@ public class Tarefa implements Serializable {
 		super();
 	}
 
-	public Tarefa(@NotNull(message = "O campo tituloTarefa não pode ser vazio.") String tituloTarefa,
-			@NotNull(message = "O campo descricaoTarefa não pode ser vazio.") String descricaoTarefa,
-			@NotNull(message = "O campo inicioTarefa não pode ser vazio.") String inicioTarefa,
-			@NotNull(message = "O campo terminoTarefa não pode ser vazio.") String terminoTarefa,
-			@NotNull(message = "O campo finalizada não pode ser vazio.") boolean finalizada,
-			@NotNull(message = "O campo prioridade não pode ser vazio.") EnumPrioridade prioridade,
+	public Tarefa(@NotBlank(message = "O campo tituloTarefa não pode ser vazio.") String tituloTarefa,
+			@NotBlank(message = "O campo descricaoTarefa não pode ser vazio.") String descricaoTarefa,
+			@NotBlank(message = "O campo inicioTarefa não pode ser vazio.") String inicioTarefa,
+			@NotBlank(message = "O campo terminoTarefa não pode ser vazio.") String terminoTarefa,
+			@NotBlank(message = "O campo finalizada não pode ser vazio.") boolean finalizada,
+			@NotBlank(message = "O campo prioridade não pode ser vazio.") EnumPrioridade prioridade,
 			Disciplina disciplina) {
 		super();
 		this.tituloTarefa = tituloTarefa;
