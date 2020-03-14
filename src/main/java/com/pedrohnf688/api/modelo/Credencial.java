@@ -13,6 +13,13 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.Cascade;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity(name = "credencial")
 @Table
 public class Credencial implements Serializable {
@@ -38,65 +45,5 @@ public class Credencial implements Serializable {
 	@OneToOne
 	@Cascade({ org.hibernate.annotations.CascadeType.ALL })
 	private Estudante estudante;
-
-	public Credencial() {
-		super();
-	}
-
-	public Credencial(@NotBlank(message = "O campo username não pode ser vazio.") String username,
-			@NotBlank(message = "O campo email não pode ser vazio.") String email,
-			@NotBlank(message = "O campo senha não pode ser vazio.") String senha, Estudante estudante) {
-		super();
-		this.username = username;
-		this.email = email;
-		this.senha = senha;
-		this.estudante = estudante;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public Estudante getEstudante() {
-		return estudante;
-	}
-
-	public void setEstudante(Estudante estudante) {
-		this.estudante = estudante;
-	}
-
-	@Override
-	public String toString() {
-		return "Credencial [id=" + id + ", username=" + username + ", email=" + email + ", senha=" + senha
-				+ ", estudante=" + estudante + "]";
-	}
 
 }

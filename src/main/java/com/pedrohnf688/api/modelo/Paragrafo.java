@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -20,9 +19,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity(name = "conversa")
+@Entity(name = "paragrafo")
 @Table
-public class Conversa implements Serializable {
+public class Paragrafo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,22 +29,16 @@ public class Conversa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "mensagem")
-	private String mensagem;
+	@Column(name = "topico", nullable = false)
+	@NotBlank(message = "O campo topico não pode ser vazio.")
+	private String topico;
 
-	@Column(name = "nome", nullable = false)
-	@NotBlank(message = "O campo nome não pode ser vazio.")
-	private String nome;
-
-	@Column(name = "data", nullable = false)
-	@NotBlank(message = "O campo data não pode ser vazio.")
-	private String data;
-
-	@OneToOne
-	private Arquivo foto;
+	@Column(name = "conteudo", nullable = false)
+	@NotBlank(message = "O campo conteudo não pode ser vazio.")
+	private String conteudo;
 
 	@ManyToOne
-	@JoinColumn(name = "grupo_id")
-	private Grupo grupo;
+	@JoinColumn(name = "artigo_id")
+	private Artigo artigo;
 
 }

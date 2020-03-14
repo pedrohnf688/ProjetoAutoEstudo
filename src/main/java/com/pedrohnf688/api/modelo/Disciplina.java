@@ -25,6 +25,13 @@ import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity(name = "disciplina")
 @Table
 public class Disciplina implements Serializable {
@@ -65,94 +72,9 @@ public class Disciplina implements Serializable {
 	@Cascade({ org.hibernate.annotations.CascadeType.ALL })
 	private List<Tarefa> listaTarefas;
 
-	public Disciplina() {
-		super();
-	}
-
-	public Disciplina(@NotBlank(message = "O campo disciplina não pode ser vazio.") String disciplina,
-			@NotBlank(message = "O campo assunto não pode ser vazio.") String assunto,
-			@NotBlank(message = "O campo dataDisciplina não pode ser vazio.") String dataDisciplina, int qtdEstudantes,
-			List<Estudante> listaEstudantes, List<Tarefa> listaTarefas) {
-		super();
-		this.disciplina = disciplina;
-		this.assunto = assunto;
-		this.dataDisciplina = dataDisciplina;
-		this.qtdEstudantes = qtdEstudantes;
-		this.listaEstudantes = listaEstudantes;
-		this.listaTarefas = listaTarefas;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getDisciplina() {
-		return disciplina;
-	}
-
-	public void setDisciplina(String disciplina) {
-		this.disciplina = disciplina;
-	}
-
-	public String getAssunto() {
-		return assunto;
-	}
-
-	public void setAssunto(String assunto) {
-		this.assunto = assunto;
-	}
-
-	public String getDataDisciplina() {
-		return dataDisciplina;
-	}
-
-	public void setDataDisciplina(String dataDisciplina) {
-		this.dataDisciplina = dataDisciplina;
-	}
-
-	public int getQtdEstudantes() {
-		return qtdEstudantes;
-	}
-
-	public void setQtdEstudantes(int qtdEstudantes) {
-		this.qtdEstudantes = qtdEstudantes;
-	}
-
-	public List<Estudante> getListaEstudantes() {
-		return listaEstudantes;
-	}
-
-	public void setListaEstudantes(List<Estudante> listaEstudantes) {
-		this.listaEstudantes = listaEstudantes;
-	}
-
-	public List<Tarefa> getListaTarefas() {
-		return listaTarefas;
-	}
-
-	public void setListaTarefas(List<Tarefa> listaTarefas) {
-		this.listaTarefas = listaTarefas;
-	}
-
-	public void addEstudante(Estudante e) {
-		listaEstudantes.add(e);
-		e.getListaDisciplinas().add(this);
-	}
-
-	public void removeEstudante(Estudante e) {
-		listaEstudantes.remove(e);
-		e.getListaDisciplinas().remove(this);
-	}
-
-	@Override
-	public String toString() {
-		return "Disciplina [id=" + id + ", disciplina=" + disciplina + ", assunto=" + assunto + ", dataDisciplina="
-				+ dataDisciplina + ", qtdEstudantes=" + qtdEstudantes + ", listaEstudantes=" + listaEstudantes
-				+ ", listaTarefas=" + listaTarefas + "]";
-	}
+	@OneToMany(mappedBy = "disciplina", fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
+	@Cascade({ org.hibernate.annotations.CascadeType.ALL })
+	private List<Artigo> listaArtigos;
 
 }

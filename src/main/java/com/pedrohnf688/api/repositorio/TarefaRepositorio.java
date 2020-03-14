@@ -15,5 +15,11 @@ public interface TarefaRepositorio extends JpaRepository<Tarefa, Integer> {
 
 	@Query(value = "SELECT * FROM Tarefa t WHERE t.disciplina_id = :id", nativeQuery = true)
 	List<Tarefa> findByListaTarefas(Integer id);
+	
+	@Query(value = "SELECT * FROM Tarefa t WHERE t.finalizada = false", nativeQuery = true)
+	List<Tarefa> findByTarefaStatusAtiva();
+
+	@Query(value = "SELECT * FROM Tarefa t WHERE t.finalizada = true", nativeQuery = true)
+	List<Tarefa> findByTarefaStatusFeitas();
 }
       

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,9 +32,10 @@ import com.pedrohnf688.api.servico.DisciplinaServico;
 import com.pedrohnf688.api.servico.EstudanteServico;
 import com.pedrohnf688.api.servico.GrupoServico;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/estudante")
-@CrossOrigin(origins = "*")
 public class EstudanteController {
 
 	private static final Logger log = LoggerFactory.getLogger(EstudanteController.class);
@@ -52,6 +52,7 @@ public class EstudanteController {
 	@Autowired
 	private GrupoServico gs;
 
+	@ApiOperation("Buscar todos os estudantes")
 	@GetMapping
 	public ResponseEntity<Response<List<Estudante>>> listarTodosEstudantes() {
 
@@ -67,6 +68,7 @@ public class EstudanteController {
 		return ResponseEntity.ok(response);
 	}
 
+	@ApiOperation("Buscar estudantes por id")
 	@GetMapping(value = "{id}")
 	public ResponseEntity<Response<Estudante>> buscarPorId(@PathVariable("id") Integer id) {
 
@@ -82,6 +84,7 @@ public class EstudanteController {
 		return ResponseEntity.ok(response);
 	}
 
+	@ApiOperation("Cadastrar estudante")
 	@PostMapping
 	public ResponseEntity<Response<Credencial>> cadastrar(@Valid @RequestBody EstudanteDto estudanteDto,
 			BindingResult result) throws NoSuchAlgorithmException {
@@ -119,6 +122,7 @@ public class EstudanteController {
 		e.setDataNascimento(estudanteDto.getDataNascimento());
 		e.setDescricao(estudanteDto.getDescricao());
 		e.setEscolaridade(estudanteDto.getEscolaridade());
+		e.setPontos(estudanteDto.getPontos());
 		e.setInstituicao(estudanteDto.getInstituicao());
 		e.setNome(estudanteDto.getNome());
 		e.setSexo(estudanteDto.getSexo());
@@ -135,6 +139,7 @@ public class EstudanteController {
 
 	}
 
+	@ApiOperation("Atualizar estudante pelo id")
 	@PutMapping(value = "{id}")
 	public ResponseEntity<Response<Credencial>> atualizarPorId(@PathVariable("id") Integer id,
 			@Valid @RequestBody EstudanteDto estudanteDto, BindingResult result) throws NoSuchAlgorithmException {
@@ -186,6 +191,7 @@ public class EstudanteController {
 		credencial.getEstudante().setSexo(estudanteDto.getSexo());
 	}
 
+	@ApiOperation("Deletar estudante pelo id")
 	@DeleteMapping(value = "{id}")
 	public ResponseEntity<Response<String>> deletarPorId(@PathVariable("id") Integer id) {
 
@@ -201,6 +207,7 @@ public class EstudanteController {
 		return ResponseEntity.ok(new Response<String>());
 	}
 
+	@ApiOperation("Buscar disciplinas do estudante pelo id")
 	@GetMapping(value = "disciplinas/{id}")
 	public ResponseEntity<Response<List<Disciplina>>> disciplinasDoEstudante(@PathVariable("id") Integer id) {
 
@@ -217,6 +224,7 @@ public class EstudanteController {
 		return ResponseEntity.ok(response);
 	}
 
+	@ApiOperation("Buscar grupos do estudantes pelo id")
 	@GetMapping(value = "grupos/{id}")
 	public ResponseEntity<Response<List<Grupo>>> gruposDoEstudante(@PathVariable("id") Integer id) {
 
@@ -233,6 +241,7 @@ public class EstudanteController {
 		return ResponseEntity.ok(response);
 	}
 
+	@ApiOperation("Cadastrar estudante na disciplina")
 	@PostMapping(value = "{idEstudante}/disciplina/{idDisciplina}")
 	public ResponseEntity<Response<Disciplina>> adicionarDisciplina(@PathVariable("idEstudante") Integer idEstudante,
 			@PathVariable("idDisciplina") Integer idDisciplina) {
@@ -266,6 +275,7 @@ public class EstudanteController {
 		return ResponseEntity.ok(response);
 	}
 
+	@ApiOperation("Cadastrar estudante no grupo")
 	@PostMapping(value = "{idEstudante}/grupo/{idGrupo}")
 	public ResponseEntity<Response<Grupo>> adicionarGrupo(@PathVariable("idEstudante") Integer idEstudante,
 			@PathVariable("idGrupo") Integer idGrupo) {
@@ -294,6 +304,7 @@ public class EstudanteController {
 		return ResponseEntity.ok(response);
 	}
 
+	@ApiOperation("Remover estudante da disciplina pelo id")
 	@PutMapping(value = "{idEstudante}/disciplina/{idDisciplina}")
 	public ResponseEntity<Response<Disciplina>> removerDisciplina(@PathVariable("idEstudante") Integer idEstudante,
 			@PathVariable("idDisciplina") Integer idDisciplina) {
@@ -331,6 +342,7 @@ public class EstudanteController {
 		return ResponseEntity.ok(response);
 	}
 
+	@ApiOperation("Remover estudante do grupo pelo id")
 	@PutMapping(value = "{idEstudante}/grupo/{idGrupo}")
 	public ResponseEntity<Response<Grupo>> removerGrupo(@PathVariable("idEstudante") Integer idEstudante,
 			@PathVariable("idGrupo") Integer idGrupo) {
@@ -379,4 +391,5 @@ public class EstudanteController {
 	// Add Grupo -- Feito
 	// remover disciplna -- Feito
 	// remover grupo -- Feito
+	// adicionar pontos para estudantes -- Faltando
 }

@@ -45,5 +45,15 @@ public class TarefaServico {
 		return this.tr.findByListaTarefas(id);
 	}
 
-	
+
+	public List<Tarefa> listaTarefaAtiva(){
+		log.info("Listando todos as tarefas ativas");
+		return this.tr.findByTarefaStatusAtiva();
+	}
+
+	public List<Tarefa> listaTarefaFeita(){
+		log.info("Listando todos as tarefas concluidas");
+		return this.tr.findByTarefaStatusFeitas();
+	}
+
 }

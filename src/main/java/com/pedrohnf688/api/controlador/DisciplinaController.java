@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,9 +29,10 @@ import com.pedrohnf688.api.servico.DisciplinaServico;
 import com.pedrohnf688.api.servico.EstudanteServico;
 import com.pedrohnf688.api.servico.TarefaServico;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/disciplina")
-@CrossOrigin(origins = "*")
 public class DisciplinaController {
 
 	private static final Logger log = LoggerFactory.getLogger(DisciplinaController.class);
@@ -45,6 +46,7 @@ public class DisciplinaController {
 	@Autowired
 	private TarefaServico ts;
 
+	@ApiOperation("Buscar todas as disciplinas")
 	@GetMapping
 	public ResponseEntity<Response<List<Disciplina>>> listarTodasDisciplinas() {
 
@@ -60,6 +62,7 @@ public class DisciplinaController {
 		return ResponseEntity.ok(response);
 	}
 
+	@ApiOperation("Buscar disciplina pelo id")
 	@GetMapping(value = "{id}")
 	public ResponseEntity<Response<Disciplina>> buscarPorId(@PathVariable("id") Integer id) {
 
@@ -75,7 +78,7 @@ public class DisciplinaController {
 		return ResponseEntity.ok(response);
 	}
 
-	//Resposta está vindo no formato errado
+	@ApiOperation("Cadastrar disciplina")
 	@PostMapping(value = "{estudanteId}")
 	public ResponseEntity<Response<Disciplina>> cadastrar(@Valid @RequestBody Disciplina disciplina,
 			@PathVariable("estudanteId") Integer estudanteId, BindingResult result) throws NoSuchAlgorithmException {
@@ -84,7 +87,6 @@ public class DisciplinaController {
 		Optional<Estudante> e = this.es.listaPorId(estudanteId);
 
 		if (result.hasErrors()) {
-			log.info("entrou post disciplina");
 			log.error("Erro validando o cadastro da Disciplina: {}", result.getAllErrors());
 			result.getAllErrors().forEach(error -> response.getErros().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
@@ -97,8 +99,8 @@ public class DisciplinaController {
 		response.setData(disciplina);
 		return ResponseEntity.ok(response);
 	}
-	
-	//Resposta está vindo no formato errado
+
+	@ApiOperation("Atualizar disciplina")
 	@PutMapping(value = "{id}")
 	public ResponseEntity<Response<Disciplina>> atualizar(@Valid @RequestBody DisciplinaDto disciplinaDto,
 			@PathVariable("id") Integer id, BindingResult result) throws NoSuchAlgorithmException {
@@ -133,7 +135,8 @@ public class DisciplinaController {
 		disciplina.setDisciplina(disciplinaDto.getDisciplina());
 	}
 
-	@GetMapping(value = "tarefas/{id}")
+	@ApiOperation("Buscar tarefas da disciplina pelo id")
+	@GetMapping(value = "/tarefas/{id}")
 	public ResponseEntity<Response<List<Tarefa>>> tarefasDaDisciplina(@PathVariable("id") Integer id) {
 
 		Response<List<Tarefa>> response = new Response<List<Tarefa>>();
@@ -147,6 +150,22 @@ public class DisciplinaController {
 
 		response.setData(tarefas);
 		return ResponseEntity.ok(response);
+	}
+
+	@ApiOperation("Deletar disciplina pelo id")
+	@DeleteMapping(value = "{id}")
+	public ResponseEntity<Response<String>> deletarPorId(@PathVariable("id") Integer id) {
+
+		Response<String> response = new Response<String>();
+		Optional<Disciplina> d = this.ds.listaPorId(id);
+
+		if (!d.isPresent()) {
+			response.getErros().add("Disicplina não encontrada.");
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		this.ds.deletarPorId(id);
+		return ResponseEntity.ok(new Response<String>());
 	}
 
 }
