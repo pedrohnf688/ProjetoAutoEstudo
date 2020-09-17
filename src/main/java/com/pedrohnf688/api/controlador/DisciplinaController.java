@@ -133,6 +133,7 @@ public class DisciplinaController {
 
 		disciplina.setAssunto(disciplinaDto.getAssunto());
 		disciplina.setDisciplina(disciplinaDto.getDisciplina());
+		disciplina.setHorario(disciplinaDto.getHorario());
 	}
 
 	@ApiOperation("Buscar tarefas da disciplina pelo id")

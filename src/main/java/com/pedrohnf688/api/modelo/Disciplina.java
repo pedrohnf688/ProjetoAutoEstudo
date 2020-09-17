@@ -2,6 +2,7 @@ package com.pedrohnf688.api.modelo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -52,12 +53,15 @@ public class Disciplina implements Serializable {
 	private String assunto;
 
 	@Column(name = "dataDisciplina", nullable = false)
-	@NotBlank(message = "O campo dataDisciplina não pode ser vazio.")
-	private String dataDisciplina;
+	private Date dataDisciplina;
 
 	@Column(name = "qtdEstudantes")
 	@NotNull(message = "O campo qtdEstudantes não pode ser vazio.")
 	private int qtdEstudantes;
+
+	@Column(name = "horario", nullable = false)
+	@NotBlank(message = "O campo horario não pode ser vazio.")
+	private String horario;
 
 	@ManyToMany
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.PERSIST, CascadeType.MERGE })
@@ -71,10 +75,5 @@ public class Disciplina implements Serializable {
 	@Fetch(FetchMode.SUBSELECT)
 	@Cascade({ org.hibernate.annotations.CascadeType.ALL })
 	private List<Tarefa> listaTarefas;
-
-	@OneToMany(mappedBy = "disciplina", fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SUBSELECT)
-	@Cascade({ org.hibernate.annotations.CascadeType.ALL })
-	private List<Artigo> listaArtigos;
 
 }

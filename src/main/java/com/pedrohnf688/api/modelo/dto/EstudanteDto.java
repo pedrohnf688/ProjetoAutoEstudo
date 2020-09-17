@@ -44,4 +44,6 @@ public class EstudanteDto {
 	@NotNull(message = "O campo pontos não pode ser nulo.")
 	private Integer pontos;
 
+	@NotBlank(message = "O campo status não pode ser vazio.")
+	private String status;
 }

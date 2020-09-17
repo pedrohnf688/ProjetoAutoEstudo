@@ -126,6 +126,7 @@ public class EstudanteController {
 		e.setInstituicao(estudanteDto.getInstituicao());
 		e.setNome(estudanteDto.getNome());
 		e.setSexo(estudanteDto.getSexo());
+		e.setStatus(estudanteDto.getStatus());
 		return e;
 	}
 

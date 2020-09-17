@@ -17,4 +17,6 @@ public class DisciplinaDto {
 	@NotBlank(message = "O campo assunto não pode ser vazio.")
 	private String assunto;
 
+	@NotBlank(message = "O campo horario não pode ser vazio.")
+	private String horario;
 }
