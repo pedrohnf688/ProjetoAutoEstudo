@@ -1,5 +1,7 @@
 package com.pedrohnf688.api;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +12,7 @@ import com.pedrohnf688.api.modelo.Credencial;
 import com.pedrohnf688.api.modelo.Disciplina;
 import com.pedrohnf688.api.modelo.Estudante;
 import com.pedrohnf688.api.modelo.Grupo;
+import com.pedrohnf688.api.modelo.enums.EnumPerfil;
 import com.pedrohnf688.api.modelo.enums.EnumSexo;
 import com.pedrohnf688.api.modelo.enums.EnumTipoEscolaridade;
 import com.pedrohnf688.api.servico.CredencialServico;
@@ -49,6 +52,8 @@ public class ProjetoAutoEstudoApplication {
 			e.setDescricao("ffefrere");
 			e.setEscolaridade(EnumTipoEscolaridade.ENSINO_MEDIO);
 			e.setNome("pedro");
+			e.setPontos(100);
+			e.setStatus(EnumPerfil.ESTUDANTE.toString());
 			e.setSexo(EnumSexo.MASCULINO);
 			c.setEstudante(e);
 			this.cs.inserir(c);
@@ -66,6 +71,8 @@ public class ProjetoAutoEstudoApplication {
 			e1.setDescricao("ffefrere");
 			e1.setEscolaridade(EnumTipoEscolaridade.ENSINO_MEDIO);
 			e1.setNome("roberto");
+			e1.setPontos(100);
+			e1.setStatus(EnumPerfil.ESTUDANTE.toString());
 			e1.setSexo(EnumSexo.MASCULINO);
 			c1.setEstudante(e1);
 			this.cs.inserir(c1);
@@ -73,8 +80,9 @@ public class ProjetoAutoEstudoApplication {
 			Disciplina d = new Disciplina();
 			d.setId(1);
 			d.setAssunto("matematica");
-			d.setDataDisciplina("34/24/333");
+			d.setDataDisciplina(new Date());
 			d.setQtdEstudantes(1);
+			d.setHorario("08:00");
 			d.setDisciplina("matematica");
 			d.getListaEstudantes().add(e1);
 			this.ds.inserir(d);
@@ -82,8 +90,9 @@ public class ProjetoAutoEstudoApplication {
 			Disciplina d1 = new Disciplina();
 			d1.setId(2);
 			d1.setAssunto("portugues");
-			d1.setDataDisciplina("11/24/333");
+			d1.setDataDisciplina(new Date());
 			d1.setQtdEstudantes(1);
+			d1.setHorario("09:00");
 			d1.setDisciplina("portugues");
 			d1.getListaEstudantes().add(e);
 			this.ds.inserir(d1);

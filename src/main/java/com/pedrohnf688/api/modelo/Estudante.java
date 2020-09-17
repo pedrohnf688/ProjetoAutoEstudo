@@ -60,6 +60,10 @@ public class Estudante implements Serializable {
 	@NotNull(message = "O campo pontos não pode ser nulo.")
 	private Integer pontos;
 
+	@Column(name = "status", nullable = false)
+	@NotBlank(message = "O campo status não pode ser vazio.")
+	private String status;
+
 	@Column(name = "escolaridade", nullable = false)
 	@NotNull(message = "O campo escolaridade não pode ser vazio.")
 	@Enumerated(EnumType.STRING)

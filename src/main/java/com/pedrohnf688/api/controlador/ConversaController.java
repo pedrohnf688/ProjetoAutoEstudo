@@ -71,7 +71,7 @@ public class ConversaController {
 		return ResponseEntity.ok(response);
 	}
 
-	@ApiOperation("Buscar conversa do grupo pelo id")
+	@ApiOperation("Buscar conversa pelo id do grupo")
 	@GetMapping(value = "/grupo/{id}")
 	public ResponseEntity<Response<List<Conversa>>> buscarPorGrupoId(@PathVariable("id") Integer id) {
 
